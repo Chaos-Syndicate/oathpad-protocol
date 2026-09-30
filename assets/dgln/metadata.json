@@ -2,6 +2,6 @@
   "name": "Demo Goblin",
   "symbol": "DGLN",
   "description": "A small, real test launch on OathPad's live mainnet program, used to verify every money-moving instruction works correctly with real funds before external creators are allowed. Not a real project -- no value, no roadmap, no team.",
-  "image": "https://raw.githubusercontent.com/Chaos-Syndicate/oathpad-protocol/main/assets/dgln/mascot.svg",
+  "image": "https://raw.githubusercontent.com/Chaos-Syndicate/oathpad-protocol/main/assets/dgln/mascot.png",
   "external_url": "https://oathpad.app"
 }
