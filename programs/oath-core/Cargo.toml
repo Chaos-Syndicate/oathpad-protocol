@@ -1,0 +1,40 @@
+[package]
+name = "oath-core"
+version = "0.1.0"
+description = "OathPad server-enforced escrow and milestone commitments"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "oath_core"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+anchor-debug = []
+custom-heap = []
+custom-panic = []
+
+[dependencies]
+anchor-lang = { version = "0.31.1", features = ["init-if-needed"] }
+anchor-spl = { version = "0.31.1", features = ["token", "associated_token"] }
+# Pinned to the 2.1.x line to avoid solana-program >=2.2 pulling in blake3 versions
+# whose `digest`/`block-buffer` chain requires the `edition2024` cargo feature, which
+# Solana's platform-tools v1.46.1 (bundled rustc 1.79.0) does not support. See
+# docs/B1-REPORT.md "Toolchain verification" for the full story.
+solana-program = "~2.1"
+# blake3 >=1.6 depends on digest 0.11 -> block-buffer 0.12, which needs the
+# `edition2024` cargo feature that platform-tools v1.46.1's bundled cargo (1.79.0)
+# does not support. Pin to the last 1.5.x release, which still uses digest 0.10.
+blake3 = "=1.5.5"
+# zeroize >=1.8 pulls zeroize_derive >=1.5, which also needs edition2024. Pin to
+# the last pre-edition2024 1.x release (pulled in transitively via
+# spl-token-2022's confidential-transfer support inside anchor-spl).
+zeroize = "=1.7.0"
+# zeroize 1.7.0's own Cargo.toml allows zeroize_derive >=1.4 with no upper bound,
+# so it still resolves to the latest 1.5.0 (edition2024) unless pinned separately.
+zeroize_derive = "=1.4.2"

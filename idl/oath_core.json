@@ -1,0 +1,2039 @@
+{
+  "address": "8GDUGYTnykMWmL5JX5m4nGf2zogq9jJ1QtCJYqpuXVQS",
+  "metadata": {
+    "name": "oath_core",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "OathPad server-enforced escrow and milestone commitments"
+  },
+  "instructions": [
+    {
+      "name": "activate_oath",
+      "discriminator": [
+        145,
+        140,
+        47,
+        81,
+        95,
+        131,
+        52,
+        178
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "signer": true,
+          "relations": [
+            "oath"
+          ]
+        },
+        {
+          "name": "oath",
+          "writable": true
+        },
+        {
+          "name": "reviewer_set",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119,
+                  101,
+                  114,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "add_allowed_creator",
+      "discriminator": [
+        31,
+        33,
+        58,
+        50,
+        208,
+        142,
+        154,
+        240
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "protocol"
+          ]
+        },
+        {
+          "name": "protocol",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  116,
+                  111,
+                  99,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch_gate",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104,
+                  95,
+                  103,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "creator",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "add_milestone",
+      "discriminator": [
+        165,
+        18,
+        177,
+        128,
+        204,
+        172,
+        23,
+        249
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "oath"
+          ]
+        },
+        {
+          "name": "oath",
+          "writable": true
+        },
+        {
+          "name": "reviewer_set",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119,
+                  101,
+                  114,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        },
+        {
+          "name": "milestone",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "allocation_amount",
+          "type": "u64"
+        },
+        {
+          "name": "deadline",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "approve_milestone",
+      "discriminator": [
+        145,
+        85,
+        92,
+        60,
+        50,
+        130,
+        219,
+        106
+      ],
+      "accounts": [
+        {
+          "name": "reviewer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "oath",
+          "relations": [
+            "milestone"
+          ]
+        },
+        {
+          "name": "reviewer_set",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119,
+                  101,
+                  114,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        },
+        {
+          "name": "milestone",
+          "writable": true
+        },
+        {
+          "name": "receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  112,
+                  112,
+                  114,
+                  111,
+                  118,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "milestone"
+              },
+              {
+                "kind": "account",
+                "path": "reviewer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "cancel_draft_oath",
+      "discriminator": [
+        2,
+        239,
+        118,
+        177,
+        76,
+        1,
+        10,
+        251
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "signer": true,
+          "relations": [
+            "oath"
+          ]
+        },
+        {
+          "name": "oath",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "Omit for native SOL; otherwise the classic SPL mint committed by the Oath."
+          ],
+          "optional": true
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim_tranche",
+      "discriminator": [
+        45,
+        125,
+        67,
+        159,
+        88,
+        225,
+        29,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "docs": [
+            "Creator for claims; any signer for failure execution."
+          ],
+          "signer": true
+        },
+        {
+          "name": "oath",
+          "relations": [
+            "milestone"
+          ]
+        },
+        {
+          "name": "milestone",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "Omit for native SOL; classic SPL owner and stored mint checked by Anchor."
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "close_completed_oath",
+      "discriminator": [
+        249,
+        11,
+        12,
+        106,
+        61,
+        118,
+        53,
+        95
+      ],
+      "accounts": [
+        {
+          "name": "oath",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_launch_binding",
+      "docs": [
+        "`dbc_pool` is now an account (verified when DBC-owned); only `dbc_config` stays an argument."
+      ],
+      "discriminator": [
+        161,
+        232,
+        177,
+        52,
+        181,
+        66,
+        216,
+        221
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "protocol",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  116,
+                  111,
+                  99,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch_gate",
+          "docs": [
+            "Fails closed: the gate account must exist (initialize_launch_gate) and allow the creator."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104,
+                  95,
+                  103,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "dbc_pool",
+          "docs": [
+            "Meteora DBC program: must be a `VirtualPool` whose creator, base_mint and config match",
+            "(proof of launch ownership; the mint authority is irrelevant because DBC revokes it at",
+            "pool creation). Any other owner: opaque metadata, and the creator must hold the mint",
+            "authority (the V1 path for non-DBC mints)."
+          ]
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "dbc_config",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "create_oath",
+      "discriminator": [
+        18,
+        53,
+        143,
+        138,
+        106,
+        66,
+        255,
+        195
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "launch"
+          ]
+        },
+        {
+          "name": "protocol",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  116,
+                  111,
+                  99,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch_gate",
+          "docs": [
+            "Re-checked here, not only at binding time: a creator removed from the allowlist keeps",
+            "their binding but cannot add Oaths to it while the gate is closed."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104,
+                  95,
+                  103,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch.token_mint",
+                "account": "LaunchBinding"
+              }
+            ]
+          }
+        },
+        {
+          "name": "oath",
+          "writable": true
+        },
+        {
+          "name": "asset_mint"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "committed_amount",
+          "type": "u64"
+        },
+        {
+          "name": "failure_action",
+          "type": {
+            "defined": {
+              "name": "FailureAction"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "create_reviewer_set",
+      "discriminator": [
+        152,
+        27,
+        118,
+        15,
+        247,
+        249,
+        231,
+        13
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "oath"
+          ]
+        },
+        {
+          "name": "oath"
+        },
+        {
+          "name": "reviewer_set",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119,
+                  101,
+                  114,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "reviewers",
+          "type": {
+            "vec": "pubkey"
+          }
+        },
+        {
+          "name": "threshold",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "execute_failure",
+      "discriminator": [
+        124,
+        3,
+        213,
+        39,
+        80,
+        92,
+        205,
+        122
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "docs": [
+            "Creator for claims; any signer for failure execution."
+          ],
+          "signer": true
+        },
+        {
+          "name": "oath",
+          "relations": [
+            "milestone"
+          ]
+        },
+        {
+          "name": "milestone",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "Omit for native SOL; classic SPL owner and stored mint checked by Anchor."
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "finalize_milestone",
+      "discriminator": [
+        7,
+        134,
+        89,
+        13,
+        34,
+        31,
+        108,
+        149
+      ],
+      "accounts": [
+        {
+          "name": "oath",
+          "relations": [
+            "milestone"
+          ]
+        },
+        {
+          "name": "milestone",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "fund_oath_sol",
+      "discriminator": [
+        203,
+        249,
+        45,
+        162,
+        194,
+        146,
+        151,
+        248
+      ],
+      "accounts": [
+        {
+          "name": "funder",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "oath"
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "fund_oath_spl",
+      "discriminator": [
+        32,
+        39,
+        188,
+        232,
+        73,
+        122,
+        134,
+        115
+      ],
+      "accounts": [
+        {
+          "name": "funder",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "oath"
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "source",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "oath"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_launch_gate",
+      "docs": [
+        "Launch gate (admin only; creation-time scope only, see instructions/launch_gate.rs)."
+      ],
+      "discriminator": [
+        68,
+        38,
+        90,
+        45,
+        106,
+        247,
+        204,
+        122
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "protocol"
+          ]
+        },
+        {
+          "name": "protocol",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  116,
+                  111,
+                  99,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch_gate",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104,
+                  95,
+                  103,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_protocol",
+      "discriminator": [
+        188,
+        233,
+        252,
+        106,
+        134,
+        146,
+        202,
+        91
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "protocol",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  116,
+                  111,
+                  99,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "8GDUGYTnykMWmL5JX5m4nGf2zogq9jJ1QtCJYqpuXVQS"
+        },
+        {
+          "name": "program_data"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "treasury",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "remove_allowed_creator",
+      "discriminator": [
+        162,
+        219,
+        44,
+        169,
+        252,
+        93,
+        25,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "protocol"
+          ]
+        },
+        {
+          "name": "protocol",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  116,
+                  111,
+                  99,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch_gate",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104,
+                  95,
+                  103,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "creator",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "resolve_expired",
+      "discriminator": [
+        18,
+        38,
+        108,
+        89,
+        114,
+        130,
+        104,
+        201
+      ],
+      "accounts": [
+        {
+          "name": "oath",
+          "relations": [
+            "milestone"
+          ]
+        },
+        {
+          "name": "milestone",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "set_launches_permissionless",
+      "discriminator": [
+        127,
+        165,
+        222,
+        202,
+        27,
+        163,
+        81,
+        143
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "protocol"
+          ]
+        },
+        {
+          "name": "protocol",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  116,
+                  111,
+                  99,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch_gate",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104,
+                  95,
+                  103,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "permissionless",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "submit_evidence",
+      "discriminator": [
+        12,
+        169,
+        228,
+        194,
+        229,
+        31,
+        44,
+        39
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "signer": true,
+          "relations": [
+            "oath"
+          ]
+        },
+        {
+          "name": "oath",
+          "relations": [
+            "milestone"
+          ]
+        },
+        {
+          "name": "milestone",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "evidence_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ApprovalReceipt",
+      "discriminator": [
+        90,
+        80,
+        244,
+        181,
+        107,
+        106,
+        1,
+        136
+      ]
+    },
+    {
+      "name": "LaunchBinding",
+      "discriminator": [
+        46,
+        161,
+        1,
+        98,
+        17,
+        231,
+        118,
+        237
+      ]
+    },
+    {
+      "name": "LaunchGate",
+      "discriminator": [
+        120,
+        120,
+        152,
+        247,
+        69,
+        31,
+        10,
+        244
+      ]
+    },
+    {
+      "name": "Milestone",
+      "discriminator": [
+        38,
+        210,
+        239,
+        177,
+        85,
+        184,
+        10,
+        44
+      ]
+    },
+    {
+      "name": "Oath",
+      "discriminator": [
+        222,
+        97,
+        48,
+        50,
+        185,
+        60,
+        175,
+        24
+      ]
+    },
+    {
+      "name": "ProtocolConfig",
+      "discriminator": [
+        207,
+        91,
+        250,
+        28,
+        152,
+        179,
+        215,
+        209
+      ]
+    },
+    {
+      "name": "ReviewerSet",
+      "discriminator": [
+        8,
+        35,
+        103,
+        243,
+        205,
+        31,
+        0,
+        190
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Paused",
+      "msg": "Protocol creation is paused"
+    },
+    {
+      "code": 6001,
+      "name": "Unauthorized",
+      "msg": "Unauthorized signer"
+    },
+    {
+      "code": 6002,
+      "name": "SelfApproval",
+      "msg": "Creator cannot review their own Oath"
+    },
+    {
+      "code": 6003,
+      "name": "DuplicateReviewer",
+      "msg": "Duplicate reviewer"
+    },
+    {
+      "code": 6004,
+      "name": "AlreadyApproved",
+      "msg": "Reviewer has already approved this milestone"
+    },
+    {
+      "code": 6005,
+      "name": "WrongReviewer",
+      "msg": "Reviewer is not in the immutable reviewer set"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidThreshold",
+      "msg": "Threshold must be positive and at most the reviewer count"
+    },
+    {
+      "code": 6007,
+      "name": "TooManyReviewers",
+      "msg": "Too many reviewers"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidReviewer",
+      "msg": "Invalid reviewer public key"
+    },
+    {
+      "code": 6009,
+      "name": "AllocationExceedsCommitted",
+      "msg": "Allocation exceeds the committed amount"
+    },
+    {
+      "code": 6010,
+      "name": "IncompleteAllocation",
+      "msg": "Allocation must fully cover commitment before activation"
+    },
+    {
+      "code": 6011,
+      "name": "AlreadyClaimed",
+      "msg": "Milestone has already been claimed"
+    },
+    {
+      "code": 6012,
+      "name": "NotApproved",
+      "msg": "Milestone has not reached approval threshold"
+    },
+    {
+      "code": 6013,
+      "name": "NotClaimable",
+      "msg": "Finalize the milestone before claiming"
+    },
+    {
+      "code": 6014,
+      "name": "DeadlineNotPassed",
+      "msg": "Deadline has not passed"
+    },
+    {
+      "code": 6015,
+      "name": "DeadlinePassed",
+      "msg": "Deadline has passed"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidDeadline",
+      "msg": "Invalid deadline"
+    },
+    {
+      "code": 6017,
+      "name": "WrongMint",
+      "msg": "Wrong asset mint"
+    },
+    {
+      "code": 6018,
+      "name": "WrongVault",
+      "msg": "Wrong vault"
+    },
+    {
+      "code": 6019,
+      "name": "AlreadyActivated",
+      "msg": "Oath is already active or complete"
+    },
+    {
+      "code": 6020,
+      "name": "ActivationFundingFailed",
+      "msg": "Vault does not hold the full commitment"
+    },
+    {
+      "code": 6021,
+      "name": "MutationAfterActivation",
+      "msg": "Economic configuration is immutable after activation"
+    },
+    {
+      "code": 6022,
+      "name": "NotActive",
+      "msg": "Oath is not active"
+    },
+    {
+      "code": 6023,
+      "name": "LaunchLocked",
+      "msg": "Launch configuration is locked"
+    },
+    {
+      "code": 6024,
+      "name": "TooManyOaths",
+      "msg": "Maximum three Oaths per launch"
+    },
+    {
+      "code": 6025,
+      "name": "TooManyMilestones",
+      "msg": "Too many milestones"
+    },
+    {
+      "code": 6026,
+      "name": "ZeroAmount",
+      "msg": "Amount must be positive"
+    },
+    {
+      "code": 6027,
+      "name": "ArithmeticOverflow",
+      "msg": "Checked arithmetic failed"
+    },
+    {
+      "code": 6028,
+      "name": "InvalidPda",
+      "msg": "Invalid PDA"
+    },
+    {
+      "code": 6029,
+      "name": "WrongOwner",
+      "msg": "Wrong program owner"
+    },
+    {
+      "code": 6030,
+      "name": "InvalidMilestoneState",
+      "msg": "Invalid milestone state transition"
+    },
+    {
+      "code": 6031,
+      "name": "TerminalMilestone",
+      "msg": "Milestone is terminal"
+    },
+    {
+      "code": 6032,
+      "name": "InvalidEvidence",
+      "msg": "Evidence is missing or already frozen"
+    },
+    {
+      "code": 6033,
+      "name": "WrongRecipient",
+      "msg": "Wrong fixed failure recipient"
+    },
+    {
+      "code": 6034,
+      "name": "UnsupportedSolBurn",
+      "msg": "Native SOL cannot use the SPL burn action"
+    },
+    {
+      "code": 6035,
+      "name": "FailureNotReady",
+      "msg": "Failure is not ready for execution"
+    },
+    {
+      "code": 6036,
+      "name": "InsufficientVaultBalance",
+      "msg": "Vault balance is insufficient"
+    },
+    {
+      "code": 6037,
+      "name": "IncompleteMilestoneList",
+      "msg": "Every milestone must be supplied in index order"
+    },
+    {
+      "code": 6038,
+      "name": "UnsettledMilestone",
+      "msg": "Every milestone must be settled before completion"
+    },
+    {
+      "code": 6039,
+      "name": "UnsafeVault",
+      "msg": "SPL vault has an unexpected delegate or close authority"
+    },
+    {
+      "code": 6040,
+      "name": "WrongAssetType",
+      "msg": "Invalid funding asset type"
+    },
+    {
+      "code": 6041,
+      "name": "InvalidUpgradeAuthority",
+      "msg": "Protocol initialization requires the program upgrade authority"
+    },
+    {
+      "code": 6042,
+      "name": "LaunchesGated",
+      "msg": "Launches are gated and the creator is not on the allowlist"
+    },
+    {
+      "code": 6043,
+      "name": "AllowlistFull",
+      "msg": "Creator allowlist is full"
+    },
+    {
+      "code": 6044,
+      "name": "AlreadyAllowlisted",
+      "msg": "Creator is already on the allowlist"
+    },
+    {
+      "code": 6045,
+      "name": "NotAllowlisted",
+      "msg": "Creator is not on the allowlist"
+    },
+    {
+      "code": 6046,
+      "name": "NotDbcPool",
+      "msg": "Account is not a Meteora DBC virtual pool"
+    },
+    {
+      "code": 6047,
+      "name": "PoolCreatorMismatch",
+      "msg": "DBC pool creator is not the signer"
+    },
+    {
+      "code": 6048,
+      "name": "PoolMintMismatch",
+      "msg": "DBC pool base mint is not the launch mint"
+    },
+    {
+      "code": 6049,
+      "name": "PoolConfigMismatch",
+      "msg": "DBC pool config does not match the supplied config"
+    },
+    {
+      "code": 6050,
+      "name": "NotDraft",
+      "msg": "Only a Draft Oath can be cancelled"
+    },
+    {
+      "code": 6051,
+      "name": "MintHasFreezeAuthority",
+      "msg": "Oath collateral mint must not have a live freeze authority"
+    },
+    {
+      "code": 6052,
+      "name": "RecipientAtaMissing",
+      "msg": "Recipient associated token account is missing; create it before settlement"
+    }
+  ],
+  "types": [
+    {
+      "name": "ApprovalReceipt",
+      "docs": [
+        "Never closed: the PDA is the immutable per-milestone vote uniqueness record."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "approved",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FailureAction",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Burn"
+          },
+          {
+            "name": "FixedRecipient",
+            "fields": [
+              {
+                "name": "recipient",
+                "type": "pubkey"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "LaunchBinding",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "dbc_pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "dbc_config",
+            "type": "pubkey"
+          },
+          {
+            "name": "oath_count",
+            "type": "u8"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "LaunchStatus"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LaunchGate",
+      "docs": [
+        "Who may create a `LaunchBinding` or an `Oath` while the protocol is in a closed",
+        "(team dogfood) phase. Singleton PDA `[\"launch_gate\"]`, managed only by",
+        "`ProtocolConfig.authority`.",
+        "",
+        "It is a sibling of `ProtocolConfig` rather than new fields on it because the",
+        "73-byte `ProtocolConfig` already exists on devnet and has no padding; extending it",
+        "would need a resize migration of a live account.",
+        "",
+        "Scope: creation only. No funding, activation, evidence, approval, claim, expiry,",
+        "failure or close path reads this account, so gate management can never reach a",
+        "creator's locked assets or any post-activation-immutable field",
+        "(docs/THREAT-MODEL.md section 4)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launches_permissionless",
+            "docs": [
+              "When true the allowlist is ignored and any creator may create launches and Oaths."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "allowed_creators",
+            "docs": [
+              "Creators allowed while `launches_permissionless == false`. Bounded, no duplicates,",
+              "never the zero key."
+            ],
+            "type": {
+              "vec": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LaunchStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Draft"
+          },
+          {
+            "name": "OathsFunded"
+          },
+          {
+            "name": "Live"
+          },
+          {
+            "name": "Graduated"
+          },
+          {
+            "name": "Closed"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Milestone",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "oath",
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "type": "u8"
+          },
+          {
+            "name": "allocation_amount",
+            "type": "u64"
+          },
+          {
+            "name": "deadline",
+            "type": "i64"
+          },
+          {
+            "name": "evidence_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "approvals_count",
+            "type": "u8"
+          },
+          {
+            "name": "required_approvals",
+            "type": "u8"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "MilestoneStatus"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MilestoneStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Active"
+          },
+          {
+            "name": "EvidenceSubmitted"
+          },
+          {
+            "name": "Approved"
+          },
+          {
+            "name": "Claimable"
+          },
+          {
+            "name": "Claimed"
+          },
+          {
+            "name": "Expired"
+          },
+          {
+            "name": "Failed"
+          },
+          {
+            "name": "ConsequenceExecuted"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Oath",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "asset_mint",
+            "docs": [
+              "Pubkey::default() denotes native SOL; all other values are classic SPL mints."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "committed_amount",
+            "type": "u64"
+          },
+          {
+            "name": "milestone_count",
+            "type": "u8"
+          },
+          {
+            "name": "reviewer_set",
+            "type": "pubkey"
+          },
+          {
+            "name": "failure_action",
+            "type": {
+              "defined": {
+                "name": "FailureAction"
+              }
+            }
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "OathStatus"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "OathStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Draft"
+          },
+          {
+            "name": "Active"
+          },
+          {
+            "name": "Completed"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProtocolConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury",
+            "type": "pubkey"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReviewerSet",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "reviewers",
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "threshold",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
